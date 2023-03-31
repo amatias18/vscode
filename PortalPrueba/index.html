@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>XML</title>
+	<style>
+		table,
+		th,
+		td {
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+
+		th,
+		td {
+			padding: 5px
+		}
+	</style>
+</head>
+
+<body>
+	<div id="texto">
+		<h1>Datos XML</h1>
+		<button id="CargarDatos">Cargar datos XML</button>
+	</div>
+	<table id="demo"></table>
+
+<script>
+	document.getElementById("CargarDatos").addEventListener("click", CargarDatos);
+
+	function CargarDatos() {
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				cargarXML(this);
+}
+};
+		xhr.open("GET", "datos.xml", true);
+		xhr.send();
+}
+	function cargarXML(xml) {
+	var docXML = xml.responseXML;
+	var tabla = "<tr><th>Titulo</th><th>Artista</th><th>Origen</th><th>Precio</th><th>anio</th></tr>";
+	var factura = docXML.getElementsByTagName("CD");
+	for (var i = 0; i < factura.length; i++) { tabla +="<tr><td>" ; tabla
+		+=factura[i].getElementsByTagName("TITULO")[0].textContent; tabla
+		+=factura[i].getElementsByTagName("ARTISTA")[0].textContent; tabla
+		+=factura[i].getElementsByTagName("ORIGEN")[0].textContent; tabla
+		+=factura[i].getElementsByTagName("PRECIO")[0].textContent; tabla
+		+=factura[i].getElementsByTagName("ANO")[0].textContent; tabla +="</td></tr>" ; }
+	document.getElementById("demo").innerHTML=tabla;
+	 }
+	</script>
+</body>
+</html>
